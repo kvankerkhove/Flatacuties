@@ -75,9 +75,12 @@ As a user, I can:
    }
    ```
 
-3. When the `form#votes-form` is submitted, add the number of votes from
-   the input field to the character displayed in the `div#detailed-info`. **No
-   persistence is needed**.
+3. When the `form#votes-form` is submitted, add the number of votes from the
+   input field to the character displayed in the `div#detailed-info`. **No
+   persistence is needed**. The number of votes should be _cumulative_. For
+   example, if a character currently has 5 votes, and a user adds another 5
+   votes via the form, the number of votes displayed for the character should
+   increase to 10.
 
 ### Bonus Deliverables
 
