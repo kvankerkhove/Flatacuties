@@ -16,19 +16,25 @@
       "id": 3,
       "name": "Ms. Zebra",
       "image": "https://media2.giphy.com/media/20G9uNqE3K4dRjCppA/source.gif",
-      "votes": 0
+      "votes": "7"
     },
     {
       "id": 4,
       "name": "Dr. Lion",
       "image": "http://bestanimations.com/Animals/Mammals/Cats/Lions/animated-lion-gif-11.gif",
-      "votes": 0
+      "votes": "0"
     },
     {
       "id": 5,
       "name": "Mme. Panda",
       "image": "https://media.giphy.com/media/ALalVMOVR8Qw/giphy.gif",
-      "votes": 0
+      "votes": "15"
+    },
+    {
+      "name": "Ms. Kitten",
+      "image": "https://c.tenor.com/b1DVdUGztTIAAAAC/cartoon-dog.gif",
+      "votes": "0",
+      "id": 6
     }
   ]
 }
