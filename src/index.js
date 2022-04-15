@@ -14,7 +14,7 @@ fetch(url)
     const image = characterInfo.querySelector('#image')
     name.textContent = characters[0].name
     image.src = characters[0].image
-    characterVotes.textContent = 0
+    characterVotes.textContent = characters[0].votes
 
     //iterate through each character and add to the character bar
     characters.forEach(character => addToCharacterBar(character))
@@ -22,32 +22,8 @@ fetch(url)
 //catch any errors and print in console
 .catch(err => console.log(err))
 
-//create function addToCharacterBar that takes each character as a parameter 
-const addToCharacterBar = (character) => {
-    //create a span element for each character and input their name into it, add that span to the character bar
-    const span = document.createElement('span')
-    span.textContent = character.name
-    characterBar.append(span)
-
-    //make an event listener that fires every time you click on a span element
-    span.addEventListener('click', (e) => {
-        const name = characterInfo.querySelector('#name')
-        const image = characterInfo.querySelector('#image')
-
-        //when you click, it changes the character info to the character info of the span clicked
-        name.textContent = character.name
-        image.src = character.image
-
-        characterVotes.textContent = character.votes
-    })
-
-}
-
-
-//grab the form via it's id
 const form = document.querySelector('#votes-form')
 
-//add an event listener to fire when form is submitted
 form.addEventListener('submit', (e) => {
     e.preventDefault()
     //convert current votes to an integer and the inputed vote to an integer
@@ -55,7 +31,6 @@ form.addEventListener('submit', (e) => {
     let addedVotes = parseInt(e.target.votes.value, 10)
     //add the inputed vote to the current votes and input that number into the textContent
     characterVotes.textContent = (currentVotes += addedVotes)
-    console.log(characterVotes.textContent)
     form.reset()
 
     //Use PATCH to reset character votes in json file to adjusted votes^^
@@ -64,7 +39,6 @@ form.addEventListener('submit', (e) => {
     .then(characters => {
         const charName = document.querySelector('#name')
         const charID = characters.find(character => character.name === charName.textContent)
-        console.log(charID)
         fetch(`${url}/${charID.id}`, {
             method: 'PATCH',
             headers: {
@@ -75,9 +49,68 @@ form.addEventListener('submit', (e) => {
             })
         })
         .then(res => res.json())
-        .then(data => console.log(data))
+        .then(data => {
+            characterVotes.textContent = data.votes
+            console.log(data.votes)
+       })
     })
 })
+
+
+//create function addToCharacterBar that takes each character as a parameter 
+const addToCharacterBar = (character) => {
+    //create a span element for each character and input their name into it, add that span to the character bar
+    const span = document.createElement('span')
+    span.textContent = character.name
+    characterBar.append(span)
+
+    //make an event listener that fires every time you click on a span element
+    span.addEventListener('click', (e) => {
+        
+        const name = characterInfo.querySelector('#name')
+        const image = characterInfo.querySelector('#image')
+
+        //when you click, it changes the character info to the character info of the span clicked
+        name.textContent = character.name
+        image.src = character.image
+    })     
+
+}
+
+
+//grab the form via it's id
+// const form = document.querySelector('#votes-form')
+
+//add an event listener to fire when form is submitted
+// form.addEventListener('submit', (e) => {
+//     e.preventDefault()
+//     //convert current votes to an integer and the inputed vote to an integer
+//     let currentVotes = parseInt(characterVotes.textContent, 10)
+//     let addedVotes = parseInt(e.target.votes.value, 10)
+//     //add the inputed vote to the current votes and input that number into the textContent
+//     characterVotes.textContent = (currentVotes += addedVotes)
+//     form.reset()
+
+//     //Use PATCH to reset character votes in json file to adjusted votes^^
+//     fetch(url)
+//     .then(res => res.json())
+//     .then(characters => {
+//         const charName = document.querySelector('#name')
+//         const charID = characters.find(character => character.name === charName.textContent)
+//         console.log(charID)
+//         fetch(`${url}/${charID.id}`, {
+//             method: 'PATCH',
+//             headers: {
+//                 'Content-Type' : 'application/json'
+//             },
+//             body: JSON.stringify({
+//                 votes : characterVotes.textContent
+//             })
+//         })
+//         .then(res => res.json())
+//         .then(data => characterVotes.textContent = data.votes)
+//     })
+// })
 
 
 
@@ -91,7 +124,6 @@ resetButton.addEventListener('click', (e) => {
     .then(characters => {
         const charName = document.querySelector('#name')
         const charID = characters.find(character => character.name === charName.textContent)
-        console.log(charID)
         fetch(`${url}/${charID.id}`, {
             method: 'PATCH',
             headers: {
@@ -102,10 +134,9 @@ resetButton.addEventListener('click', (e) => {
             })
         })
         .then(res => res.json())
-        .then(data => console.log(data))
+        .then(data => characterVotes.textContent = data.votes)
     })
 
-    characterVotes.textContent = character.votes
 })
 
 
@@ -131,6 +162,20 @@ addNewForm.addEventListener('submit', (e) => {
     .then(res => res.json())
     .then(data => addToCharacterBar(data))
     .catch(err => console.log(err))
+
+    addNewForm.reset()
 })
+
+
+
+
+
+
+
+
+
+
+  
+
 
 
